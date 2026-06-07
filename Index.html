@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+  <head>
+    <base target="_top">
+    <?!= include('Style'); ?>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button nav-trigger" id="navTrigger" aria-label="Menu">☰</button>
+        <div>
+          <p class="eyebrow" id="todayLabel">Personal OS</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <button class="icon-button" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+      </header>
+
+      <nav class="tabs" id="tabs" aria-label="Main navigation">
+        <button class="tab active" data-page="dashboard"><span>⌂</span>Dashboard</button>
+        <button class="tab" data-page="planner"><span>▦</span>Planner</button>
+        <button class="tab" data-page="today"><span>✓</span>Today</button>
+        <button class="tab" data-page="journal"><span>✎</span>Journal</button>
+        <button class="tab" data-page="reports"><span>◌</span>Reports</button>
+      </nav>
+
+      <main>
+        <section class="page active" id="dashboardPage"></section>
+        <section class="page" id="plannerPage"></section>
+        <section class="page" id="todayPage"></section>
+        <section class="page" id="journalPage"></section>
+        <section class="page" id="reportsPage"></section>
+      </main>
+
+      <button class="fab" id="fab" aria-label="Add task">＋</button>
+    </div>
+
+    <div class="modal-backdrop hidden" id="taskModal">
+      <form class="modal" id="taskForm">
+        <div class="modal-header">
+          <h2>Task</h2>
+          <button type="button" class="icon-button" data-close-modal>×</button>
+        </div>
+        <input type="hidden" name="id">
+        <label>Title<input name="title" required autocomplete="off"></label>
+        <label>Type
+          <select name="type">
+            <option value="daily">Daily</option>
+            <option value="repeated">Repeated</option>
+            <option value="oneTime">One-Time</option>
+          </select>
+        </label>
+        <label>Category
+          <select name="category" id="categorySelect"></select>
+        </label>
+        <label>Parent Task
+          <select name="parentId" id="parentTaskSelect">
+            <option value="">None</option>
+          </select>
+        </label>
+        <fieldset id="repeatFieldset">
+          <legend>Repeat Days</legend>
+          <div class="weekday-picker" id="repeatPicker"></div>
+        </fieldset>
+        <label class="switch-row"><span>Active</span><input type="checkbox" name="active" checked></label>
+        <button class="primary-button" type="submit">Save Task</button>
+      </form>
+    </div>
+
+    <div class="modal-backdrop hidden" id="finishModal">
+      <form class="modal review-modal" id="finishForm">
+        <div class="modal-header">
+          <h2>Finish Day</h2>
+          <button type="button" class="icon-button" data-close-finish>×</button>
+        </div>
+        <div id="finishTasks"></div>
+        <label>Daily Rating
+          <div class="rating" id="ratingPicker"></div>
+        </label>
+        <label>What did you learn today?
+          <textarea name="journal" rows="5" placeholder="Capture the insight while it is still fresh."></textarea>
+        </label>
+        <button class="primary-button" type="submit">Save Review</button>
+      </form>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+    <?!= include('Script'); ?>
+  </body>
+</html>
